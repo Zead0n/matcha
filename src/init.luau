@@ -1,22 +1,15 @@
+local Classes = require(script.Classes)
+local Raw = require(script.Raw)
+local Structure = require(script.Structure)
+local isType = require(script.util.isType)
+
 local Type = require(script.Type)
 
 local BlackTea = {}
 
-function BlackTea.isBlackTea(v: any): boolean
-	if typeof(v) ~= "table" then
-		return false
-	end
-
-	return v.className == "BlackTea"
-end
-
 function BlackTea.cast(bt: any): Type.Type
 	return bt :: Type.Type
 end
-
-local Classes = require(script.Classes)
-local Raw = require(script.Raw)
-local Structure = require(script.Structure)
 
 -- Primitive Types
 BlackTea.any = Raw.any
@@ -75,6 +68,8 @@ BlackTea.IsA = function<T>(obj: string): T
 
 	return Classes[obj]
 end
+
+BlackTea.isBlackTeaType = isType
 
 local mt = {
 	__call = function<T>(self, structTemplate: T): T
