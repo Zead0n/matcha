@@ -279,6 +279,9 @@ function Structure.wrapFn<Args..., Rets...>(args: (Args...) -> (), returns: () -
 	local argsType = castType(args)
 	local returnsType = castType(returns)
 
+	assert(argsType._internalKind == "tuple", "args must be a tuple")
+	assert(returnsType._internalKind == "tuple", "returns must be a tuple")
+
 	return function(...)
 		local argsOk, argsErr = argsType:matches(...)
 		if not argsOk then
