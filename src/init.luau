@@ -1,15 +1,14 @@
 local Classes = require(script.Classes)
 local Raw = require(script.Raw)
 local Structure = require(script.Structure)
-local isType = require(script.util.isType)
-
 local Type = require(script.Type)
 
-local BlackTea = {}
+local castType = require(script.util.castType)
+local isType = require(script.util.isType)
 
-function BlackTea.cast(bt: any): Type.Type
-	return bt :: Type.Type
-end
+export type Type = Type.Type
+
+local BlackTea = {}
 
 -- Primitive Types
 BlackTea.any = Raw.any
@@ -53,12 +52,17 @@ BlackTea.union = Structure.union
 BlackTea.literal = Structure.literal
 BlackTea.stringEnum = Structure.stringEnum
 BlackTea.optional = Structure.optional
+BlackTea.opt = Structure.optional
 BlackTea.args = Structure.args
 BlackTea.returns = Structure.returns
+BlackTea.rets = Structure.returns
 BlackTea.fn = Structure.fn
 BlackTea.wrapFn = Structure.wrapFn
 BlackTea.wrapArgsFn = Structure.wrapArgsFn
 BlackTea.wrapReturnsFn = Structure.wrapReturnsFn
+
+BlackTea.isBlackTeaType = isType
+BlackTea.cast = castType
 
 BlackTea.IsA = function<T>(obj: string): T
 	local objClass = Classes[obj]
@@ -68,8 +72,6 @@ BlackTea.IsA = function<T>(obj: string): T
 
 	return Classes[obj]
 end
-
-BlackTea.isBlackTeaType = isType
 
 local mt = {
 	__call = function<T>(self, structTemplate: T): T
