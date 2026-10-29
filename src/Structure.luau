@@ -163,7 +163,7 @@ function Structure.array<T>(valueType: T): { T }
 end
 
 function Structure.optional<T>(valueType: T): T?
-	assert(isType(valueType), "valueType (argument #1), is not a ZtType")
+	assert(isType(valueType), "valueType (argument #1), is not a BlackTeaType")
 
 	local self: Type.TypeBase = {
 		kind = `{tostring(valueType)}?`,
@@ -196,7 +196,7 @@ type UnionFunc =
 local function blackTeaTypeCheck(...: any): string?
 	for i, v in { ... } do
 		if not isType(v) then
-			return `argument #{i}, is not a ZtType.`
+			return `argument #{i}, is not a BlackTeaType.`
 		end
 	end
 
@@ -330,7 +330,7 @@ function Structure.struct<T>(template: T): T
 	local genericTemplate = {}
 	for keyType, elemType in template :: any do
 		if not isType(elemType) then
-			error(`value of '{tostring(keyType)}' is not, ZtType`, 2)
+			error(`value of '{tostring(keyType)}' is not, BlackTeaType`, 2)
 		end
 
 		if not isType(keyType) then
