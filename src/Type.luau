@@ -1,36 +1,41 @@
-export type TypeBase = {
-	kind: string,
-	matcher: (...any) -> (boolean, string?),
-	_internalKind: string?,
-}
-
 local Type = {}
-
 Type.__index = Type
 
-Type.__call = function(self: Type, ...)
-	return self:matches(...)
+type TypeBase<T> = {
+	kind: string,
+	matcher: (any) -> (boolean, string?),
+	_: T,
+}
+
+export type Type<T> = typeof(setmetatable({} :: TypeBase<T>, Type))
+
+function Type.new<T>(kind: string, matcher: (any) -> (boolean, string?)): Type<T>
+	local self = setmetatable({}, Type) :: Type<T>
+	self.kind = kind
+	self.matcher = matcher
+	self._ = self :: any
+	return self
 end
 
-Type.__tostring = function(self: Type)
-	return self.kind
+function Type.isType(v: any): boolean
+	return typeof(v) == "table" and getmetatable(v) == Type
 end
 
-export type Type = typeof(setmetatable({} :: TypeBase, Type))
-
-Type.className = "BlackTea"
-
-function Type.matches(self: Type, ...: any): (boolean, string?)
-	return self.matcher(...)
+function Type.__call<T>(self: Type<T>, v: any): (boolean, string?)
+	return self:matches(v)
 end
 
-function Type.assert<T...>(self: Type, ...): T...
-	local ok, reason = self:matches(...)
+function Type.matches<T>(self: Type<T>, v: any): (boolean, string?)
+	return self.matcher(v)
+end
+
+function Type.assert<T>(self: Type<T>, v: any): T
+	local ok, err = self:matches(v)
 	if not ok then
-		error(reason or "Unknown match", 2)
+		error(err or "Unknown type")
 	end
 
-	return ...
+	return v
 end
 
 return Type

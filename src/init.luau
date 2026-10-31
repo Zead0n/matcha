@@ -1,83 +1,110 @@
-local Classes = require(script.Classes)
-local Raw = require(script.Raw)
-local Structure = require(script.Structure)
+local Adv = require(script.Adv)
+local Roblox = require(script.Roblox)
 local Type = require(script.Type)
 
-local castType = require(script.util.castType)
-local isType = require(script.util.isType)
+local formatExpectedGot = require(script.utils.formatExpectedGot)
 
-export type Type = Type.Type
+function createTypeof(typeName: string): Type.Type<any>
+	return Type.new(typeName, function(v)
+		if typeof(v) ~= typeName then
+			return false, formatExpectedGot(typeName, v)
+		end
+
+		return true
+	end)
+end
 
 local BlackTea = {}
 
--- Primitive Types
-BlackTea.any = Raw.any
-BlackTea.unknown = Raw.unknown
-BlackTea.never = Raw.never
-BlackTea.nonNil = Raw.nonNil
-BlackTea.none = Raw.none
-BlackTea.number = Raw.number
-BlackTea.string = Raw.string
-BlackTea.boolean = Raw.boolean
-BlackTea.bool = Raw.bool
-BlackTea.vector = Raw.vector
-BlackTea.thread = Raw.thread
-BlackTea.buffer = Raw.buffer
-BlackTea.table = Raw.table
-BlackTea.userdata = Raw.userdata
+export type BlackTeaType<T> = Type.Type<T>
 
--- Roblox Types
-BlackTea.BrickColor = Raw.BrickColor
-BlackTea.CFrame = Raw.CFrame
-BlackTea.Color3 = Raw.Color3
-BlackTea.Enum = Raw.Enum
-BlackTea.EnumItem = Raw.EnumItem
-BlackTea.Font = Raw.Font
-BlackTea.Instance = Raw.Instance
-BlackTea.Ray = Raw.Ray
-BlackTea.Rect = Raw.Rect
-BlackTea.Region3 = Raw.Region3
-BlackTea.UDim = Raw.UDim
-BlackTea.UDim2 = Raw.UDim2
-BlackTea.Vector2 = Raw.Vector2
-BlackTea.Vector3 = Raw.Vector3
+BlackTea.isType = Type.isType
 
--- Structured Types
-BlackTea.array = Structure.array
-BlackTea.dictionary = Structure.dictionary
-BlackTea.struct = Structure.struct
-BlackTea.tuple = Structure.tuple
-BlackTea.vararg = Structure.vararg
-BlackTea.union = Structure.union
-BlackTea.literal = Structure.literal
-BlackTea.stringEnum = Structure.stringEnum
-BlackTea.optional = Structure.optional
-BlackTea.opt = Structure.optional
-BlackTea.args = Structure.args
-BlackTea.returns = Structure.returns
-BlackTea.rets = Structure.returns
-BlackTea.fn = Structure.fn
-BlackTea.wrapFn = Structure.wrapFn
-BlackTea.wrapArgsFn = Structure.wrapArgsFn
-BlackTea.wrapReturnsFn = Structure.wrapReturnsFn
-
-BlackTea.isBlackTeaType = isType
-BlackTea.cast = castType
-
-BlackTea.IsA = function<T>(obj: string): T
-	local objClass = Classes[obj]
-	if not objClass then
-		error(`'{obj}' Class type is not valid, or is missing`)
+BlackTea.custom = Type.new
+BlackTea.any = Type.new("any", function()
+	return true
+end)
+BlackTea.unknown = Type.new("unknown", function()
+	return true
+end)
+BlackTea.never = Type.new("never", function()
+	return false, "No value is valid"
+end)
+BlackTea.none = Type.new("nil", function(v)
+	if v ~= nil then
+		return false, formatExpectedGot("nil", v)
 	end
 
-	return Classes[obj]
-end
+	return true
+end)
 
-local mt = {
-	__call = function<T>(self, structTemplate: T): T
-		assert(typeof(structTemplate) == "table", "zt only takes a table to make a struct.")
-		return BlackTea.struct(structTemplate)
-	end,
-}
+BlackTea.number = createTypeof("number") :: BlackTeaType<number>
+BlackTea.string = createTypeof("string") :: BlackTeaType<string>
+BlackTea.boolean = createTypeof("boolean") :: BlackTeaType<boolean>
+BlackTea.bool = BlackTea.boolean
+BlackTea.vector = createTypeof("vector") :: BlackTeaType<vector>
+BlackTea.thread = createTypeof("thread") :: BlackTeaType<thread>
+BlackTea.buffer = createTypeof("buffer") :: BlackTeaType<buffer>
+BlackTea.table = createTypeof("table") :: BlackTeaType<{ [any]: any }>
 
-return setmetatable(BlackTea, mt)
+BlackTea.literal = Adv.literal
+BlackTea.array = Adv.array
+BlackTea.arr = Adv.array
+BlackTea.dictionary = Adv.dictionary
+BlackTea.dict = Adv.dictionary
+BlackTea.map = Adv.dictionary
+BlackTea.struct = Adv.struct
+BlackTea.union = Adv.union
+BlackTea.enum = Adv.enum
+
+BlackTea.Axes = Roblox.Axes
+BlackTea.BrickColor = Roblox.BrickColor
+BlackTea.CatalogSearchParams = Roblox.CatalogSearchParams
+BlackTea.CFrame = Roblox.CFrame
+BlackTea.Color3 = Roblox.Color3
+BlackTea.ColorSequence = Roblox.ColorSequence
+BlackTea.ColorSequenceKeypoint = Roblox.ColorSequenceKeypoint
+BlackTea.Content = Roblox.Content
+BlackTea.DateTime = Roblox.DateTime
+BlackTea.DockWidgetPluginGuiInfo = Roblox.DockWidgetPluginGuiInfo
+BlackTea.Enum = Roblox.Enum
+BlackTea.EnumItem = Roblox.EnumItem
+BlackTea.Enums = Roblox.Enums
+BlackTea.Faces = Roblox.Faces
+BlackTea.FloatCurveKey = Roblox.FloatCurveKey
+BlackTea.Font = Roblox.Font
+BlackTea.Instance = Roblox.Instance
+BlackTea.NumberRange = Roblox.NumberRange
+BlackTea.NumberSequence = Roblox.NumberSequence
+BlackTea.NumberSequenceKeypoint = Roblox.NumberSequenceKeypoint
+BlackTea.OverlapParams = Roblox.OverlapParams
+BlackTea.Path2DControlPoint = Roblox.Path2DControlPoint
+BlackTea.PathWaypoint = Roblox.PathWaypoint
+BlackTea.PhysicalProperties = Roblox.PhysicalProperties
+BlackTea.Random = Roblox.Random
+BlackTea.Ray = Roblox.Ray
+BlackTea.RaycastParams = Roblox.RaycastParams
+BlackTea.RaycastResult = Roblox.RaycastResult
+BlackTea.RBXScriptConnection = Roblox.RBXScriptConnection
+BlackTea.RBXScriptSignal = Roblox.RBXScriptSignal
+BlackTea.Rect = Roblox.Rect
+BlackTea.Region3 = Roblox.Region3
+BlackTea.Region3int16 = Roblox.Region3int16
+BlackTea.RotationCurveKey = Roblox.RotationCurveKey
+BlackTea.Secret = Roblox.Secret
+BlackTea.SharedTable = Roblox.SharedTable
+BlackTea.TweenInfo = Roblox.TweenInfo
+BlackTea.UDim = Roblox.UDim
+BlackTea.UDim2 = Roblox.UDim2
+BlackTea.ValueCurveKey = Roblox.ValueCurveKey
+BlackTea.Vector2 = Roblox.Vector2
+BlackTea.Vector2int16 = Roblox.Vector2int16
+BlackTea.Vector3 = Roblox.Vector3
+BlackTea.Vector3int16 = Roblox.Vector3int16
+
+BlackTea.isA = Roblox.isA
+BlackTea.isClass = Roblox.isClass
+
+local test = BlackTea.number._
+
+return BlackTea
