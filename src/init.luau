@@ -107,5 +107,6 @@ Matcha.Vector3 = Roblox.Vector3
 Matcha.Vector3int16 = Roblox.Vector3int16
 
 Matcha.isA = Roblox.isA
+Matcha.isClass = Roblox.isClass
 
 return Matcha
