@@ -5,7 +5,7 @@ A roblox luau typechecker that does nothing but 'match a' value to a type. Court
 
 ## Usage
 > [!TIP]
-> Abriviate module name to `m`.
+> Abbreviate module name to `m`.
 ```luau
 local m = require(path.to.Matcha)
 
@@ -79,5 +79,5 @@ local someRemoteFunc = network.remoteFunction("SomeRemoteFunc")(m.string._, m.nu
 ```
 
 ## Limitations
-- Matcha does not do data validation, only checkes if a value matches a type.
-- Matcha does not support tuples and vararg `...: T`.
+- Does not do data validation, only checks if a value matches a type.
+- Does not support tuples and vararg `...: T`.
