@@ -1,4 +1,5 @@
 local Type = require(script.Parent.Type)
+
 local formatExpectedGot = require(script.Parent.utils.formatExpectedGot)
 local toQuote = require(script.Parent.utils.toQuote)
 
@@ -860,7 +861,8 @@ setmetatable(Roblox.isA, {
 			end
 
 			if not x:IsA(className) then
-				return false, `expected instance inherits {className}, but got {x:GetFullName()} ({x.ClassName})`
+				return false,
+					`expected an Instance that inherits {className}, but got {x:GetFullName()} ({x.ClassName})`
 			end
 
 			return true
@@ -875,11 +877,11 @@ setmetatable(Roblox.isClass, {
 	__index = function(self: Instances, className: string)
 		local instanceType = Type.new(className, function(x)
 			if typeof(x) ~= "Instance" then
-				return false, `expected an Instance, but {toQuote(x)}`
+				return false, `expected an Instance, but got {toQuote(x)}`
 			end
 
 			if x.ClassName ~= className then
-				return false, `expected instance inherits {className}, but got {x:GetFullName()} ({x.ClassName})`
+				return false, `expected an Instance of {className}, but got {x:GetFullName()} ({x.ClassName})`
 			end
 
 			return true
