@@ -49,7 +49,8 @@ local m = require(path.to.Matcha)
 local PlayerData_m = m.struct({
     money = m.number._,
     inventory = m.array(m.string)._,
-    [m.string._] = m.any._
+    winsAgainstPlayers = m.dictionary(m.isA["Player"], m.number)._,
+    [m.string._] = m.any._,
 })
 
 export type PlayerData = typeof(PlayerData_m._)
