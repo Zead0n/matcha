@@ -109,6 +109,4 @@ BlackTea.Vector3int16 = Roblox.Vector3int16
 BlackTea.isA = Roblox.isA
 BlackTea.isClass = Roblox.isClass
 
-local test = BlackTea.number._
-
 return BlackTea
