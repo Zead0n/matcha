@@ -1,4 +1,5 @@
 local Type = require(script.Parent.Type)
+local formatExpectedGot = require(script.Parent.utils.formatExpectedGot)
 local toQuote = require(script.Parent.utils.toQuote)
 
 local BlackTea = {}
@@ -12,6 +13,22 @@ function BlackTea.literal<T>(literal: T): Type.Type<T>
 
 	return Type.new(typeStr, function(v)
 		return if rawequal(v, literal) then true else false, `expected literal {typeStr}, got {toQuote(v)}`
+	end)
+end
+
+function BlackTea.optional<T>(bType: Type.Type<T>): Type.Type<T?>
+	local kind = `{bType.kind}?`
+	return Type.new(kind, function(v): (boolean, string?)
+		if v == nil then
+			return true
+		end
+
+		local ok, _ = bType:matches(v)
+		if not ok then
+			return false, formatExpectedGot(kind, v)
+		end
+
+		return true
 	end)
 end
 

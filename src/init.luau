@@ -39,7 +39,9 @@ BlackTea.none = Type.new("nil", function(v)
 end)
 
 BlackTea.number = createTypeof("number") :: BlackTeaType<number>
+BlackTea.num = BlackTea.num
 BlackTea.string = createTypeof("string") :: BlackTeaType<string>
+BlackTea.str = BlackTea.string
 BlackTea.boolean = createTypeof("boolean") :: BlackTeaType<boolean>
 BlackTea.bool = BlackTea.boolean
 BlackTea.vector = createTypeof("vector") :: BlackTeaType<vector>
@@ -48,6 +50,8 @@ BlackTea.buffer = createTypeof("buffer") :: BlackTeaType<buffer>
 BlackTea.table = createTypeof("table") :: BlackTeaType<{ [any]: any }>
 
 BlackTea.literal = Adv.literal
+BlackTea.optional = Adv.optional
+BlackTea.opt = Adv.optional
 BlackTea.array = Adv.array
 BlackTea.arr = Adv.array
 BlackTea.dictionary = Adv.dictionary
