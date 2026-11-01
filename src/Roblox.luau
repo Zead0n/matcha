@@ -63,11 +63,11 @@ Roblox.Vector3int16 = createTypeof("Vector3int16") :: Type.Type<Vector3int16>
 local function createClassType(className: string)
 	return Type.new(className, function(x)
 		if typeof(x) ~= "Instance" then
-			return false, `expected an Instance, but {toQuote(x)}`
+			return false, `expected an Instance, but got {toQuote(x)}`
 		end
 
 		if not x:IsA(className) then
-			return false, `expected instance inherits {className}, but got {x:GetFullName()} ({x.ClassName})`
+			return false, `expected an Instance that inherits {className}, but got {x:GetFullName()} ({x.ClassName})`
 		end
 
 		return true
