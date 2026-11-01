@@ -3,7 +3,7 @@
 # Matcha
 A roblox luau typechecker that does nothing but 'match a' value to a type. Courtesy to [GreenTea](https://github.com/Corecii/GreenTea) and [Boba](https://github.com/welcomestohell/boba) (typechecker, not the networking package).
 
-# Usage
+## Usage
 > [!TIP]
 > Abriviate module name to `m`.
 ```luau
@@ -74,6 +74,6 @@ end)
 local someRemoteFunc = network.remoteFunction("SomeRemoteFunc")(m.string._, m.number._)(m.boolean._)
 ```
 
-# Limitations
+## Limitations
 - Matcha does not do data validation, only checkes if a value matches a type.
 - Matcha does not support tuples and vararg `...: T`.
