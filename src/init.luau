@@ -14,23 +14,23 @@ function createTypeof(typeName: string): Type.Type<any>
 	end)
 end
 
-local BlackTea = {}
+local Matcha = {}
 
 export type Type<T> = Type.Type<T>
 
-BlackTea.isType = Type.isType
+Matcha.isType = Type.isType
 
-BlackTea.custom = Type.new
-BlackTea.any = Type.new("any", function()
+Matcha.custom = Type.new
+Matcha.any = Type.new("any", function()
 	return true
 end)
-BlackTea.unknown = Type.new("unknown", function()
+Matcha.unknown = Type.new("unknown", function()
 	return true
 end)
-BlackTea.never = Type.new("never", function()
+Matcha.never = Type.new("never", function()
 	return false, "No value is valid"
 end)
-BlackTea.none = Type.new("nil", function(v)
+Matcha.none = Type.new("nil", function(v)
 	if v ~= nil then
 		return false, formatExpectedGot("nil", v)
 	end
@@ -38,75 +38,75 @@ BlackTea.none = Type.new("nil", function(v)
 	return true
 end)
 
-BlackTea.number = createTypeof("number") :: Type<number>
-BlackTea.num = BlackTea.num
-BlackTea.string = createTypeof("string") :: Type<string>
-BlackTea.str = BlackTea.string
-BlackTea.boolean = createTypeof("boolean") :: Type<boolean>
-BlackTea.bool = BlackTea.boolean
-BlackTea.vector = createTypeof("vector") :: Type<vector>
-BlackTea.thread = createTypeof("thread") :: Type<thread>
-BlackTea.buffer = createTypeof("buffer") :: Type<buffer>
-BlackTea.table = createTypeof("table") :: Type<{ [any]: any }>
+Matcha.number = createTypeof("number") :: Type<number>
+Matcha.num = Matcha.num
+Matcha.string = createTypeof("string") :: Type<string>
+Matcha.str = Matcha.string
+Matcha.boolean = createTypeof("boolean") :: Type<boolean>
+Matcha.bool = Matcha.boolean
+Matcha.vector = createTypeof("vector") :: Type<vector>
+Matcha.thread = createTypeof("thread") :: Type<thread>
+Matcha.buffer = createTypeof("buffer") :: Type<buffer>
+Matcha.table = createTypeof("table") :: Type<{ [any]: any }>
 
-BlackTea.literal = Adv.literal
-BlackTea.optional = Adv.optional
-BlackTea.opt = Adv.optional
-BlackTea.array = Adv.array
-BlackTea.arr = Adv.array
-BlackTea.dictionary = Adv.dictionary
-BlackTea.dict = Adv.dictionary
-BlackTea.map = Adv.dictionary
-BlackTea.struct = Adv.struct
-BlackTea.union = Adv.union
-BlackTea.enum = Adv.enum
+Matcha.literal = Adv.literal
+Matcha.optional = Adv.optional
+Matcha.opt = Adv.optional
+Matcha.array = Adv.array
+Matcha.arr = Adv.array
+Matcha.dictionary = Adv.dictionary
+Matcha.dict = Adv.dictionary
+Matcha.map = Adv.dictionary
+Matcha.struct = Adv.struct
+Matcha.union = Adv.union
+Matcha.enum = Adv.enum
 
-BlackTea.Axes = Roblox.Axes
-BlackTea.BrickColor = Roblox.BrickColor
-BlackTea.CatalogSearchParams = Roblox.CatalogSearchParams
-BlackTea.CFrame = Roblox.CFrame
-BlackTea.Color3 = Roblox.Color3
-BlackTea.ColorSequence = Roblox.ColorSequence
-BlackTea.ColorSequenceKeypoint = Roblox.ColorSequenceKeypoint
-BlackTea.Content = Roblox.Content
-BlackTea.DateTime = Roblox.DateTime
-BlackTea.DockWidgetPluginGuiInfo = Roblox.DockWidgetPluginGuiInfo
-BlackTea.Enum = Roblox.Enum
-BlackTea.EnumItem = Roblox.EnumItem
-BlackTea.Enums = Roblox.Enums
-BlackTea.Faces = Roblox.Faces
-BlackTea.FloatCurveKey = Roblox.FloatCurveKey
-BlackTea.Font = Roblox.Font
-BlackTea.Instance = Roblox.Instance
-BlackTea.NumberRange = Roblox.NumberRange
-BlackTea.NumberSequence = Roblox.NumberSequence
-BlackTea.NumberSequenceKeypoint = Roblox.NumberSequenceKeypoint
-BlackTea.OverlapParams = Roblox.OverlapParams
-BlackTea.Path2DControlPoint = Roblox.Path2DControlPoint
-BlackTea.PathWaypoint = Roblox.PathWaypoint
-BlackTea.PhysicalProperties = Roblox.PhysicalProperties
-BlackTea.Random = Roblox.Random
-BlackTea.Ray = Roblox.Ray
-BlackTea.RaycastParams = Roblox.RaycastParams
-BlackTea.RaycastResult = Roblox.RaycastResult
-BlackTea.RBXScriptConnection = Roblox.RBXScriptConnection
-BlackTea.RBXScriptSignal = Roblox.RBXScriptSignal
-BlackTea.Rect = Roblox.Rect
-BlackTea.Region3 = Roblox.Region3
-BlackTea.Region3int16 = Roblox.Region3int16
-BlackTea.RotationCurveKey = Roblox.RotationCurveKey
-BlackTea.Secret = Roblox.Secret
-BlackTea.SharedTable = Roblox.SharedTable
-BlackTea.TweenInfo = Roblox.TweenInfo
-BlackTea.UDim = Roblox.UDim
-BlackTea.UDim2 = Roblox.UDim2
-BlackTea.ValueCurveKey = Roblox.ValueCurveKey
-BlackTea.Vector2 = Roblox.Vector2
-BlackTea.Vector2int16 = Roblox.Vector2int16
-BlackTea.Vector3 = Roblox.Vector3
-BlackTea.Vector3int16 = Roblox.Vector3int16
+Matcha.Axes = Roblox.Axes
+Matcha.BrickColor = Roblox.BrickColor
+Matcha.CatalogSearchParams = Roblox.CatalogSearchParams
+Matcha.CFrame = Roblox.CFrame
+Matcha.Color3 = Roblox.Color3
+Matcha.ColorSequence = Roblox.ColorSequence
+Matcha.ColorSequenceKeypoint = Roblox.ColorSequenceKeypoint
+Matcha.Content = Roblox.Content
+Matcha.DateTime = Roblox.DateTime
+Matcha.DockWidgetPluginGuiInfo = Roblox.DockWidgetPluginGuiInfo
+Matcha.Enum = Roblox.Enum
+Matcha.EnumItem = Roblox.EnumItem
+Matcha.Enums = Roblox.Enums
+Matcha.Faces = Roblox.Faces
+Matcha.FloatCurveKey = Roblox.FloatCurveKey
+Matcha.Font = Roblox.Font
+Matcha.Instance = Roblox.Instance
+Matcha.NumberRange = Roblox.NumberRange
+Matcha.NumberSequence = Roblox.NumberSequence
+Matcha.NumberSequenceKeypoint = Roblox.NumberSequenceKeypoint
+Matcha.OverlapParams = Roblox.OverlapParams
+Matcha.Path2DControlPoint = Roblox.Path2DControlPoint
+Matcha.PathWaypoint = Roblox.PathWaypoint
+Matcha.PhysicalProperties = Roblox.PhysicalProperties
+Matcha.Random = Roblox.Random
+Matcha.Ray = Roblox.Ray
+Matcha.RaycastParams = Roblox.RaycastParams
+Matcha.RaycastResult = Roblox.RaycastResult
+Matcha.RBXScriptConnection = Roblox.RBXScriptConnection
+Matcha.RBXScriptSignal = Roblox.RBXScriptSignal
+Matcha.Rect = Roblox.Rect
+Matcha.Region3 = Roblox.Region3
+Matcha.Region3int16 = Roblox.Region3int16
+Matcha.RotationCurveKey = Roblox.RotationCurveKey
+Matcha.Secret = Roblox.Secret
+Matcha.SharedTable = Roblox.SharedTable
+Matcha.TweenInfo = Roblox.TweenInfo
+Matcha.UDim = Roblox.UDim
+Matcha.UDim2 = Roblox.UDim2
+Matcha.ValueCurveKey = Roblox.ValueCurveKey
+Matcha.Vector2 = Roblox.Vector2
+Matcha.Vector2int16 = Roblox.Vector2int16
+Matcha.Vector3 = Roblox.Vector3
+Matcha.Vector3int16 = Roblox.Vector3int16
 
-BlackTea.isA = Roblox.isA
-BlackTea.isClass = Roblox.isClass
+Matcha.isA = Roblox.isA
+Matcha.isClass = Roblox.isClass
 
-return BlackTea
+return Matcha

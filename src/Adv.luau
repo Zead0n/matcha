@@ -2,9 +2,9 @@ local Type = require(script.Parent.Type)
 local formatExpectedGot = require(script.Parent.utils.formatExpectedGot)
 local toQuote = require(script.Parent.utils.toQuote)
 
-local BlackTea = {}
+local Adv = {}
 
-function BlackTea.literal<T>(literal: T): Type.Type<T>
+function Adv.literal<T>(literal: T): Type.Type<T>
 	local vType = typeof(literal)
 	local typeStr = tostring(literal)
 	if vType == "string" then
@@ -16,7 +16,7 @@ function BlackTea.literal<T>(literal: T): Type.Type<T>
 	end)
 end
 
-function BlackTea.optional<T>(bType: Type.Type<T>): Type.Type<T?>
+function Adv.optional<T>(bType: Type.Type<T>): Type.Type<T?>
 	local kind = `{bType.kind}?`
 	return Type.new(kind, function(v): (boolean, string?)
 		if v == nil then
@@ -32,7 +32,7 @@ function BlackTea.optional<T>(bType: Type.Type<T>): Type.Type<T?>
 	end)
 end
 
-function BlackTea.array<T>(bType: Type.Type<T>): Type.Type<{ T }>
+function Adv.array<T>(bType: Type.Type<T>): Type.Type<{ T }>
 	return Type.new(`\{ {bType.kind} \}`, function(v): (boolean, string?)
 		if typeof(v) ~= "table" then
 			return false, `expected 'table', got {toQuote(v)}`
@@ -58,7 +58,7 @@ function BlackTea.array<T>(bType: Type.Type<T>): Type.Type<{ T }>
 	end)
 end
 
-function BlackTea.dictionary<K, V>(kbType: Type.Type<K>, vbType: Type.Type<V>): Type.Type<{ [K]: V }>
+function Adv.dictionary<K, V>(kbType: Type.Type<K>, vbType: Type.Type<V>): Type.Type<{ [K]: V }>
 	return Type.new(`\{ [{kbType.kind}]: {vbType.kind} \}`, function(v)
 		if typeof(v) ~= "table" then
 			return false, `expected 'table', got {toQuote(v)}`
@@ -80,7 +80,7 @@ function BlackTea.dictionary<K, V>(kbType: Type.Type<K>, vbType: Type.Type<V>): 
 	end)
 end
 
-function BlackTea.struct<T>(tbl: T): Type.Type<T>
+function Adv.struct<T>(tbl: T): Type.Type<T>
 	local literalTypes: { [string]: Type.Type<any> } = {}
 	local generalTypes: { [Type.Type<any>]: Type.Type<any> } = {}
 
@@ -140,8 +140,6 @@ function BlackTea.struct<T>(tbl: T): Type.Type<T>
 	end)
 end
 
-type BlackTeaEnum<T1, T2, T3, T4, T5, T6, T7, T8> = Type.Type<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8>
-
 type UnionFunc =
 	(<T1, T2>(Type.Type<T1>, Type.Type<T2>) -> Type.Type<T1 | T2>)
 	& (<T1, T2, T3>(Type.Type<T1>, Type.Type<T2>, Type.Type<T3>) -> Type.Type<T1 | T2 | T3>)
@@ -189,8 +187,9 @@ type UnionFunc =
 		Type.Type<T7>,
 		Type.Type<T8>
 	) -> Type.Type<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8>)
+	& (<T>(...T) -> Type.Type<T>)
 
-BlackTea.union = function(...)
+Adv.union = function(...)
 	local unionTypes = { ... }
 	local kindStrings: { string } = {}
 
@@ -238,13 +237,13 @@ type EnumFunc =
 		T8
 	) -> Type.Type<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8>)
 
-BlackTea.enum = function(...): Type.Type<string>
+Adv.enum = function(...): Type.Type<string>
 	local types: { Type.Type<string> } = {}
 	for _, validValue in { ... } do
-		table.insert(types, BlackTea.literal(validValue) :: any)
+		table.insert(types, Adv.literal(validValue) :: any)
 	end
 
-	return BlackTea.union(table.unpack(types)) :: any
+	return Adv.union(table.unpack(types)) :: any
 end :: EnumFunc
 
-return BlackTea
+return Adv
