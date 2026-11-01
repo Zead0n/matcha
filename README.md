@@ -59,6 +59,9 @@ export type PlayerData = typeof(PlayerData_m._)
 local ok, err = (PlayerData_m._ :: any):matches({
     money = 100,
     inventory = { "sword" },
+    winsAgainstPlayers = {
+        [opponentPlayer] = 10,
+    },
     xp = 50,
 })
 ```
