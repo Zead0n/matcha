@@ -16,7 +16,7 @@ end
 
 local BlackTea = {}
 
-export type BlackTeaType<T> = Type.Type<T>
+export type Type<T> = Type.Type<T>
 
 BlackTea.isType = Type.isType
 
@@ -38,16 +38,16 @@ BlackTea.none = Type.new("nil", function(v)
 	return true
 end)
 
-BlackTea.number = createTypeof("number") :: BlackTeaType<number>
+BlackTea.number = createTypeof("number") :: Type<number>
 BlackTea.num = BlackTea.num
-BlackTea.string = createTypeof("string") :: BlackTeaType<string>
+BlackTea.string = createTypeof("string") :: Type<string>
 BlackTea.str = BlackTea.string
-BlackTea.boolean = createTypeof("boolean") :: BlackTeaType<boolean>
+BlackTea.boolean = createTypeof("boolean") :: Type<boolean>
 BlackTea.bool = BlackTea.boolean
-BlackTea.vector = createTypeof("vector") :: BlackTeaType<vector>
-BlackTea.thread = createTypeof("thread") :: BlackTeaType<thread>
-BlackTea.buffer = createTypeof("buffer") :: BlackTeaType<buffer>
-BlackTea.table = createTypeof("table") :: BlackTeaType<{ [any]: any }>
+BlackTea.vector = createTypeof("vector") :: Type<vector>
+BlackTea.thread = createTypeof("thread") :: Type<thread>
+BlackTea.buffer = createTypeof("buffer") :: Type<buffer>
+BlackTea.table = createTypeof("table") :: Type<{ [any]: any }>
 
 BlackTea.literal = Adv.literal
 BlackTea.optional = Adv.optional
